@@ -16,7 +16,6 @@ defineProps<{
   width: 4rem;
   height: 4rem;
   font-size: 3rem;
-  font-family: Helvetica, sans-serif;
   font-weight: bold;
   display: flex;
   align-items: center;
