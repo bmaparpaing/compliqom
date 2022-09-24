@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import GameGrid from "./components/GameGrid.vue";
-import {onMounted, onUnmounted, reactive} from "vue";
+import { onBeforeMount, onMounted, onUnmounted, reactive} from "vue";
+import { DictionaryService } from "./dictionary-service";
 
 const solution = "DIFFUSION";
 const columnSize = solution.length;
@@ -37,6 +38,7 @@ function update(event: KeyboardEvent) {
   }
 }
 
+onBeforeMount(() => DictionaryService.initDictionaryFromFile());
 onMounted(() => document.addEventListener("keydown", update));
 onUnmounted(() => window.removeEventListener("keydown", update));
 </script>
