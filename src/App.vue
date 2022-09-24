@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import GameGrid from "./components/GameGrid.vue";
-import { onBeforeMount, onMounted, onUnmounted, reactive} from "vue";
+import { onBeforeMount, onMounted, onUnmounted, reactive, ref } from 'vue';
 import { DictionaryService } from "./dictionary-service";
 
 const solution = "DIFFUSION";
@@ -18,17 +18,26 @@ const grid = reactive(
 let column = 0;
 let line = 0;
 
+let isWordValid = ref(true);
+
 function update(event: KeyboardEvent) {
   if (column < columnSize && event.key.match(/^[A-Za-z]$/)) {
     grid[line][column].letter = event.key.toUpperCase();
     column++;
   } else if (event.key === "Enter" && column === columnSize) {
-    line++;
-    column = 0;
-    if (line > 6) {
-      line = 6;
+    checkWordValidity();
+    //  si le mot est valide, passe à la ligne suivante, sinon annule le coup (efface le mot) et affiche un message d'erreur
+    if (isWordValid.value) {
+        if (line < grid.length - 1) {
+          line++;
+          column = 0;
+          grid[line].forEach((cell) => (cell.letter = "."));
+        } else {
+            // TODO gérer fin de partie car on est au dernier coup (voir issue #4)
+        }
+    } else {
+        discardPlayerInput();
     }
-    grid[line].forEach((cell) => (cell.letter = "."));
   } else if (event.key === "Backspace") {
     column--;
     if (column < 0) {
@@ -38,6 +47,23 @@ function update(event: KeyboardEvent) {
   }
 }
 
+/**
+ * Vérifie la validité du mot tapé par le joueur.
+ */
+function checkWordValidity(): void {
+    const word = grid[line].map(cell => cell.letter).join('');
+    isWordValid.value = DictionaryService.isWordValid(word);
+    console.log(`Le mot ${word} est ${isWordValid.value ? 'valide' : 'invalide'}`);
+}
+
+/**
+ * Efface la saisie du joueur en cas de mot invalide et lui affiche à nouveau la ligne vide
+ */
+function discardPlayerInput(): void {
+  column = 0;
+  grid[line].forEach((cell) => (cell.letter = "."));
+}
+
 onBeforeMount(() => DictionaryService.initDictionaryFromFile());
 onMounted(() => document.addEventListener("keydown", update));
 onUnmounted(() => window.removeEventListener("keydown", update));
@@ -45,14 +71,23 @@ onUnmounted(() => window.removeEventListener("keydown", update));
 
 <template>
   <main>
-    <GameGrid :gamegrid="grid"/>
+    <GameGrid :gamegrid="grid" />
+      <div v-if="!isWordValid" class="invalid-word">
+        Le mot n'est pas dans le dictionnaire !
+      </div>
   </main>
 </template>
 
 <style scoped>
 main {
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+
+.invalid-word {
+    margin-top: 20px;
+    font-size: 1.8rem;
 }
 </style>

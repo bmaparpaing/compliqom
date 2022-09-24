@@ -7,7 +7,6 @@ export class DictionaryService {
         const allowedWordsFileContent = await allowedWordsFile.text();
         this.allowedWords = allowedWordsFileContent.split('\n')
             .map(word => word.replaceAll('\r', ''));
-        console.log('Mots autorisés pour le jeu :', this.allowedWords);
     }
 
     /*
