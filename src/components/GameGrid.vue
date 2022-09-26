@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import {reactive} from "vue";
+import { reactive } from "vue";
 import GameCell from "./GameCell.vue";
 
 const props = defineProps<{
@@ -8,7 +8,7 @@ const props = defineProps<{
 
 const styleObject = reactive({
   gridTemplateColumns:
-      "repeat(" + props.gamegrid[0].length + ", minmax(0, 1fr))",
+    "repeat(" + props.gamegrid[0].length + ", minmax(0, 1fr))",
   width: props.gamegrid[0].length * 4 + "rem",
 });
 </script>
@@ -16,7 +16,7 @@ const styleObject = reactive({
 <template>
   <div class="game-grid" :style="styleObject">
     <template v-for="line in gamegrid">
-      <GameCell v-for="item in line" :val="item" :key="item.index"/>
+      <GameCell v-for="item in line" :val="item" :key="item.index" />
     </template>
   </div>
 </template>
