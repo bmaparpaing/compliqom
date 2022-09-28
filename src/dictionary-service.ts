@@ -6,15 +6,13 @@ export class DictionaryService {
       "/src/assets/allowed_words.txt"
     );
     const allowedWordsFileContent = await allowedWordsFile.text();
-    this.allowedWords = allowedWordsFileContent
-      .split("\n")
-      .map((word) => word.replaceAll("\r", ""));
+    this.allowedWords = allowedWordsFileContent.split("\n");
   }
 
   /*
    * Vérifie si le mot passé en paramètre est ou non un mot valide
    */
   static isWordValid(word: string): boolean {
-    return !!word && this.allowedWords.includes(word.toLowerCase());
+    return !!word && this.allowedWords.includes(word.toUpperCase());
   }
 }
