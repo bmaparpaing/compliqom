@@ -1,11 +1,18 @@
 <script setup lang="ts">
+export interface Cell {
+  letter: string;
+  index: number;
+  correct?: boolean;
+  misplaced?: boolean;
+}
+
 defineProps<{
-  val: { letter: string; index: number };
+  val: Cell;
 }>();
 </script>
 
 <template>
-  <div class="cell">
+  <div class="cell" :class="{ correct: val.correct, misplaced: val.misplaced }">
     <div class="cell-content">{{ val.letter }}</div>
   </div>
 </template>
@@ -20,5 +27,13 @@ defineProps<{
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.cell.correct {
+  background-color: firebrick;
+}
+
+.cell.misplaced {
+  background-color: #efb409;
 }
 </style>
