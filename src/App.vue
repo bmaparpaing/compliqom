@@ -10,8 +10,9 @@ import {
 } from "vue";
 import { DictionaryService } from "./dictionary-service";
 import type { Cell } from "@/components/GameCell.vue";
+import { SolutionService } from "@/solution-service";
 
-const solution = "DIFFUSION";
+const solution = SolutionService.getTodaySolution();
 const columnSize = solution.length;
 
 const grid = reactive(
