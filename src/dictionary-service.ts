@@ -3,7 +3,7 @@ export class DictionaryService {
 
   static async initDictionaryFromFile(): Promise<void> {
     const allowedWordsFile: Response = await fetch(
-      "/src/assets/allowed_words.txt"
+      "/assets/allowed_words.txt"
     );
     const allowedWordsFileContent = await allowedWordsFile.text();
     this.allowedWords = allowedWordsFileContent.split("\n");
