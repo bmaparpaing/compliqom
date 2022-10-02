@@ -26,8 +26,9 @@ const grid = reactive(
   )
 );
 
-let column = 0;
+let column = 1;
 let line = 0;
+grid[line][0].letter = solution[0];
 
 let isWordValid = ref(true);
 let gameEnded = ref(false);
@@ -48,7 +49,7 @@ function update(event: KeyboardEvent) {
     if (isWordValid.value) {
       giveHint();
       line++;
-      column = 0;
+      column = 1;
       if (word === solution) {
         // le joueur a gagné => saisie bloquée et affichage du message de succès
         gameEnded.value = true;
@@ -57,6 +58,7 @@ function update(event: KeyboardEvent) {
         if (line < grid.length) {
           // il reste des coups => on affiche la ligne suivante
           grid[line].forEach((cell) => (cell.letter = "."));
+          grid[line][0].letter = solution[0];
         } else {
           // plus de coups restants (le joueur a perdu) => saisie bloquée et affichage du message d'échec
           gameEnded.value = true;
@@ -67,8 +69,8 @@ function update(event: KeyboardEvent) {
     }
   } else if (event.key === "Backspace") {
     column--;
-    if (column < 0) {
-      column = 0;
+    if (column < 1) {
+      column = 1;
     }
     grid[line][column].letter = ".";
   }
@@ -88,8 +90,9 @@ function checkWordValidity(word: string): void {
  * Efface la saisie du joueur en cas de mot invalide et lui affiche à nouveau la ligne vide
  */
 function discardPlayerInput(): void {
-  column = 0;
+  column = 1;
   grid[line].forEach((cell) => (cell.letter = "."));
+  grid[line][0].letter = solution[0];
 }
 
 function giveHint(): void {
