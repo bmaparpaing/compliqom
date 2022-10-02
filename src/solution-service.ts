@@ -1,5 +1,5 @@
 export class SolutionService {
-  static initialPuzzleDate: number = Date.parse("2022-09-29");
+  static initialPuzzleDate: number = Date.parse("2022-10-03");
   static today: number = Date.now();
 
   static getTodaySolution(): string {
