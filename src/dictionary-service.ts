@@ -1,8 +1,10 @@
+import dictionaryUrl from "./assets/allowed_words.txt";
+
 export class DictionaryService {
   static allowedWords: string[] = []; // la liste des mots autorisés pour la saisie par le joueur
 
   static async initDictionaryFromFile(): Promise<void> {
-    const allowedWordsFile: Response = await fetch("/assets/allowed_words.txt");
+    const allowedWordsFile: Response = await fetch(dictionaryUrl);
     const allowedWordsFileContent = await allowedWordsFile.text();
     this.allowedWords = allowedWordsFileContent.split("\n");
   }
