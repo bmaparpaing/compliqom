@@ -17,13 +17,12 @@ export class SolutionService {
   }
 
   static solutions = [
-    "UkVWT0xURQ==",
-    "QVBQUklTRQ==",
-    "Tk9ZQVVY",
-    "RkFSQ0VVUg==",
-    "REVQTEFDRVI=",
-    "R0VOVElM",
-    "TUlOSVRJRVVY",
-    "TE9VUEVS",
+    "U1laWUdJRQ==",
+    "RU5ORUFHT05F",
+    "S0VOT1RST04=",
+    "QU5BVEhFTUU=",
+    "Q0FSWU9QU0U=",
+    "SVJFTklTTUU=",
+    "TElOSU1FTlQ=",
   ];
 }
