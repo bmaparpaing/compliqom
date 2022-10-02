@@ -34,6 +34,7 @@ let gameEnded = ref(false);
 let success = ref(false);
 
 function update(event: KeyboardEvent) {
+  if (line >= grid.length) return;
   if (column < columnSize && event.key.match(/^[A-Za-z]$/)) {
     grid[line][column].letter = event.key.toUpperCase();
     column++;
@@ -46,16 +47,15 @@ function update(event: KeyboardEvent) {
     //  sinon annule le coup (efface le mot) et affiche un message d'erreur
     if (isWordValid.value) {
       giveHint();
-
+      line++;
+      column = 0;
       if (word === solution) {
         // le joueur a gagné => saisie bloquée et affichage du message de succès
         gameEnded.value = true;
         success.value = true;
       } else {
-        if (line < grid.length - 1) {
+        if (line < grid.length) {
           // il reste des coups => on affiche la ligne suivante
-          line++;
-          column = 0;
           grid[line].forEach((cell) => (cell.letter = "."));
         } else {
           // plus de coups restants (le joueur a perdu) => saisie bloquée et affichage du message d'échec
@@ -118,6 +118,35 @@ function giveHint(): void {
     });
 }
 
+const copied = ref(false);
+
+function share(): void {
+  let text =
+    "COMPLIQOM #" +
+    SolutionService.getPuzzleNumber() +
+    " " +
+    (success.value ? line : "X") +
+    "/" +
+    grid.length +
+    "\n\n";
+  text += grid
+    .slice(0, line)
+    .map((row) =>
+      row
+        .map((cell) => {
+          if (cell.correct) return "🟥";
+          if (cell.misplaced) return "🟨";
+          else return "🟦";
+        })
+        .join("")
+    )
+    .join("\n");
+  navigator.clipboard.writeText(text).then(() => {
+    copied.value = true;
+    setTimeout(() => (copied.value = false), 3000);
+  });
+}
+
 watch(gameEnded, (gameEnded) => {
   if (gameEnded) {
     document.removeEventListener("keydown", update);
@@ -138,9 +167,19 @@ onUnmounted(() => document.removeEventListener("keydown", update));
     <div v-else-if="gameEnded">
       <div v-if="success" class="game-success">
         Bravo ! Vous avez trouvé le mot du jour.
+        <a href="#" @click.prevent="share">Partager</a>
+        <Transition>
+          <div v-if="copied">Copié dans le presse-papier !</div>
+        </Transition>
       </div>
       <div v-else class="game-failure">
-        Dommage ! Le mot du jour était : {{ solution }}
+        Dommage ! Le mot du jour était :
+        <span class="solution">{{ solution }}</span
+        >&nbsp;
+        <a href="#" @click.prevent="share">Partager</a>
+        <Transition>
+          <div v-if="copied">Copié dans le presse-papier !</div>
+        </Transition>
       </div>
     </div>
   </main>
@@ -162,10 +201,24 @@ main {
 .game-success {
   margin-top: 20px;
   font-size: 1.8rem;
+  text-align: center;
 }
 
 .game-failure {
   margin-top: 20px;
   font-size: 1.8rem;
+  text-align: center;
+}
+
+.solution {
+  font-weight: bold;
+}
+
+.v-leave-active {
+  transition: opacity 1s ease;
+}
+
+.v-leave-to {
+  opacity: 0;
 }
 </style>
