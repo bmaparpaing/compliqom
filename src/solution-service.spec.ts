@@ -29,4 +29,34 @@ describe("SolutionService", function () {
     SolutionService.today = new Date().setDate(new Date().getDate() + 2);
     expect(SolutionService.getTodaySolution()).toEqual("PERDRE");
   });
+
+  it("checks if the solution 'bonjour' is normalized as 'BONJOUR'", function () {
+    SolutionService.rawSolution = "bonjour";
+    SolutionService.normalizedSolution = "";
+    expect(SolutionService.getNormalizedSolution()).toBe("BONJOUR");
+  });
+
+  it("checks if the solution 'gâteau' is normalized as 'GATEAU'", function () {
+    SolutionService.rawSolution = "gâteau";
+    SolutionService.normalizedSolution = "";
+    expect(SolutionService.getNormalizedSolution()).toBe("GATEAU");
+  });
+
+  it("checks if the solution 'garçonnière' is normalized as 'GARCONNIERE'", function () {
+    SolutionService.rawSolution = "garçonnière";
+    SolutionService.normalizedSolution = "";
+    expect(SolutionService.getNormalizedSolution()).toBe("GARCONNIERE");
+  });
+
+  it("checks if the solution 'nævus' is normalized as 'NAEVUS'", function () {
+    SolutionService.rawSolution = "nævus";
+    SolutionService.normalizedSolution = "";
+    expect(SolutionService.getNormalizedSolution()).toBe("NAEVUS");
+  });
+
+  it("checks if the solution 'œcuménisme' is normalized as 'OECUMENISME'", function () {
+    SolutionService.rawSolution = "œcuménisme";
+    SolutionService.normalizedSolution = "";
+    expect(SolutionService.getNormalizedSolution()).toBe("OECUMENISME");
+  });
 });

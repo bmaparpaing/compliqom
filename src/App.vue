@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import GameGrid from "./components/GameGrid.vue";
 import {
+  computed,
   onBeforeMount,
   onMounted,
   onUnmounted,
@@ -12,7 +13,8 @@ import { DictionaryService } from "./dictionary-service";
 import type { Cell } from "@/components/GameCell.vue";
 import { SolutionService } from "@/solution-service";
 
-const solution = SolutionService.getTodaySolution();
+const rawSolution = SolutionService.getRawSolution();
+const solution = SolutionService.getNormalizedSolution();
 const columnSize = solution.length;
 
 const grid = reactive(
@@ -33,6 +35,10 @@ grid[line][0].letter = solution[0];
 let isWordValid = ref(true);
 let gameEnded = ref(false);
 let success = ref(false);
+
+const wikipediaDefinitionLink = computed(() => {
+  return `https://fr.wikipedia.org/wiki/${rawSolution}`;
+});
 
 function update(event: KeyboardEvent) {
   if (line >= grid.length) return;
@@ -184,6 +190,11 @@ onUnmounted(() => document.removeEventListener("keydown", update));
           <div v-if="copied">Copié dans le presse-papier !</div>
         </Transition>
       </div>
+      <div class="definition">
+        <a target="_blank" :href="wikipediaDefinitionLink"
+          >Définition Wikipédia (lien externe)</a
+        >
+      </div>
     </div>
   </main>
 </template>
@@ -215,6 +226,12 @@ main {
 
 .solution {
   font-weight: bold;
+}
+
+.definition {
+  margin-top: 20px;
+  font-size: 1.4rem;
+  text-align: center;
 }
 
 .v-leave-active {
