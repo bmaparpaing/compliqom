@@ -1,36 +1,31 @@
 <script setup lang="ts">
-import GameGrid from "./components/GameGrid.vue";
+import { useGrid } from "@/grid";
+import { SolutionService } from "@/solution-service";
 import {
   computed,
   onBeforeMount,
   onMounted,
   onUnmounted,
-  reactive,
   ref,
   watch,
 } from "vue";
+import GameGrid from "./components/GameGrid.vue";
 import { DictionaryService } from "./dictionary-service";
-import type { Cell } from "@/components/GameCell.vue";
-import { SolutionService } from "@/solution-service";
 
+// TODO remplacer les appels à SolutionService par un composable useSolution pour récupérer 'rawSolution' et 'solution'
 const rawSolution = SolutionService.getRawSolution();
 const solution = SolutionService.getNormalizedSolution();
-const columnSize = solution.length;
-
-const grid = reactive(
-  [...Array(6).keys()].map((i) =>
-    [...Array(solution.length).keys()].map(
-      (j): Cell => ({
-        letter: i === 0 ? "." : "",
-        index: i * columnSize + j,
-      })
-    )
-  )
-);
-
-let column = 1;
-let line = 0;
-grid[line][0].letter = solution[0];
+const {
+  grid,
+  currentLine,
+  currentColumn,
+  insertLetter,
+  moveCursorToRight,
+  moveCursorToNextLine,
+  displayEmptyLine,
+  displayHints,
+  discardPlayerInput,
+} = useGrid();
 
 let isWordValid = ref(true);
 let gameEnded = ref(false);
@@ -41,30 +36,28 @@ const wikipediaDefinitionLink = computed(() => {
 });
 
 function update(event: KeyboardEvent) {
-  if (line >= grid.length) return;
-  if (column < columnSize && event.key.match(/^[A-Za-z]$/)) {
-    grid[line][column].letter = event.key.toUpperCase();
-    column++;
-  } else if (event.key === "Enter" && column === columnSize) {
-    const word = grid[line].map((cell) => cell.letter).join("");
+  if (currentLine.value >= grid.length) return;
+  if (currentColumn.value < solution.length && event.key.match(/^[A-Za-z]$/)) {
+    insertLetter(event.key);
+    moveCursorToRight();
+  } else if (event.key === "Enter" && currentColumn.value === solution.length) {
+    const word = grid[currentLine.value].map((cell) => cell.letter).join("");
 
     checkWordValidity(word);
 
     //  si le mot est valide, affiche les indices visuels au joueur puis vérifie si le joueur a gagné,
     //  sinon annule le coup (efface le mot) et affiche un message d'erreur
     if (isWordValid.value) {
-      giveHint();
-      line++;
-      column = 1;
+      displayHints();
+      moveCursorToNextLine();
       if (word === solution) {
         // le joueur a gagné => saisie bloquée et affichage du message de succès
         gameEnded.value = true;
         success.value = true;
       } else {
-        if (line < grid.length) {
-          // il reste des coups => on affiche la ligne suivante
-          grid[line].forEach((cell) => (cell.letter = "."));
-          grid[line][0].letter = solution[0];
+        if (currentLine.value < grid.length) {
+          // il reste des coups
+          displayEmptyLine();
         } else {
           // plus de coups restants (le joueur a perdu) => saisie bloquée et affichage du message d'échec
           gameEnded.value = true;
@@ -74,11 +67,11 @@ function update(event: KeyboardEvent) {
       discardPlayerInput();
     }
   } else if (event.key === "Backspace") {
-    column--;
-    if (column < 1) {
-      column = 1;
+    currentColumn.value--;
+    if (currentColumn.value < 1) {
+      currentColumn.value = 1;
     }
-    grid[line][column].letter = ".";
+    grid[currentLine.value][currentColumn.value].letter = ".";
   }
 }
 
@@ -87,44 +80,6 @@ function update(event: KeyboardEvent) {
  */
 function checkWordValidity(word: string): void {
   isWordValid.value = DictionaryService.isWordValid(word);
-  console.log(
-    `Le mot ${word} est ${isWordValid.value ? "valide" : "invalide"}`
-  );
-}
-
-/**
- * Efface la saisie du joueur en cas de mot invalide et lui affiche à nouveau la ligne vide
- */
-function discardPlayerInput(): void {
-  column = 1;
-  grid[line].forEach((cell) => (cell.letter = "."));
-  grid[line][0].letter = solution[0];
-}
-
-function giveHint(): void {
-  let solutionLetters = solution.split("");
-  grid[line].forEach((cell, index) => {
-    // Pour chaque lettre correspondant à la solution à la même place, déclarer la lettre correcte et effacer la lettre
-    // de la solution pour ne plus la prendre en compte dans les calculs des lettres mal placées.
-    if (solutionLetters[index] === cell.letter) {
-      cell.correct = true;
-      solutionLetters[index] = "";
-    }
-  });
-  grid[line]
-    .filter((cell) => !cell.correct)
-    .forEach((cell) => {
-      // Pour chaque lettre correspondant à une lettre de la solution à une autre position, déclarer la lettre mal
-      // placée et effacer la lettre de la solution pour ne plus la détecter si cette lettre revient à nouveau dans
-      // le mot proposé par le joueur.
-      let findIndex = solutionLetters.findIndex(
-        (letter) => letter === cell.letter
-      );
-      if (findIndex >= 0) {
-        cell.misplaced = true;
-        solutionLetters[findIndex] = "";
-      }
-    });
 }
 
 const copied = ref(false);
@@ -134,12 +89,12 @@ function share(): void {
     "COMPLIQOM #" +
     SolutionService.getPuzzleNumber() +
     " " +
-    (success.value ? line : "X") +
+    (success.value ? currentLine.value : "X") +
     "/" +
     grid.length +
     "\n\n";
   text += grid
-    .slice(0, line)
+    .slice(0, currentLine.value)
     .map((row) =>
       row
         .map((cell) => {
