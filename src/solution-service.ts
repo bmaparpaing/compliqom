@@ -44,5 +44,12 @@ export class SolutionService {
     "Q2FyeW9wc2U=",
     "SXLpbmlzbWU=",
     "TGluaW1lbnQ=",
+    "SulqdW51bQ==",
+    "QXBvcGh5c2U=",
+    "TWlocmFi",
+    "yWNoYW5zb24=",
+    "U3VyZnVzaW9u",
+    "SGFsbGFsaQ==",
+    "UGF06HJl",
   ];
 }
