@@ -25,5 +25,6 @@ const styleObject = reactive({
 .game-grid {
   width: 16rem;
   display: grid;
+  margin-bottom: 40px;
 }
 </style>

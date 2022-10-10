@@ -1,8 +1,14 @@
-body {
-  background-color: #0584c9;
-  color: white;
-  font-family: Helvetica, sans-serif;
+:root {
+    --color-correct-letter: firebrick;
+    --color-misplaced-letter: #efb409;
 }
+
+body {
+    background-color: #0584c9;
+    color: white;
+    font-family: Helvetica, sans-serif;
+}
+
 a {
-  color: white;
+    color: white;
 }

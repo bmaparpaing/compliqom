@@ -30,10 +30,10 @@ defineProps<{
 }
 
 .cell.correct {
-  background-color: firebrick;
+  background-color: var(--color-correct-letter);
 }
 
 .cell.misplaced {
-  background-color: #efb409;
+  background-color: var(--color-misplaced-letter);
 }
 </style>
