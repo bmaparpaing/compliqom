@@ -1,8 +1,8 @@
 import { reactive, ref } from "vue";
 import type { Cell } from "@/components/GameCell.vue";
-import { DictionaryService } from "@/dictionary-service";
 import { useGameState } from "@/game-state";
 import { useSolution } from "@/composables/solution/solution";
+import { useDictionary } from "@/composables/dictionary/dictionary";
 
 const { normalizedSolution: solution } = useSolution();
 
@@ -25,6 +25,8 @@ const currentColumn = ref(1);
 displayWordFirstLetterOnCurrentLine();
 
 export function useGrid() {
+  const { checkWordExists } = useDictionary();
+
   function handleLetter(letter: string): void {
     if (currentColumn.value === solution.length) return;
     insertLetter(letter);
@@ -39,13 +41,12 @@ export function useGrid() {
     grid[currentLine.value][currentColumn.value].letter = ".";
   }
 
-  function handleEnter() {
+  async function handleEnter() {
     if (currentColumn.value < solution.length) return;
 
     const word = grid[currentLine.value].map((cell) => cell.letter).join("");
 
-    // TODO remplacer par un composable useDictionary > méthode isWordValid()
-    const isWordValid = DictionaryService.isWordValid(word);
+    const isWordValid = await checkWordExists(word);
 
     //  si le mot est valide, affiche les indices visuels au joueur puis vérifie si le joueur a gagné,
     //  sinon annule le coup (efface le mot) et affiche un message d'erreur

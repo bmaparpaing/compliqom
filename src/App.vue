@@ -3,16 +3,8 @@ import GameGrid from "@/components/GameGrid.vue";
 import VirtualKeyboard from "@/components/keyboard/VirtualKeyboard.vue";
 import { useGameState } from "@/game-state";
 import { useGrid } from "@/grid";
-import {
-  computed,
-  onBeforeMount,
-  onMounted,
-  onUnmounted,
-  ref,
-  watch,
-} from "vue";
+import { computed, onMounted, onUnmounted, ref, watch } from "vue";
 import { useSolution } from "@/composables/solution/solution";
-import { DictionaryService } from "./dictionary-service";
 
 const {
   puzzleNumber,
@@ -73,7 +65,6 @@ watch(gameEnded, (gameEnded) => {
   }
 });
 
-onBeforeMount(() => DictionaryService.initDictionaryFromFile());
 onMounted(() => document.addEventListener("keydown", update));
 onUnmounted(() => document.removeEventListener("keydown", update));
 </script>
