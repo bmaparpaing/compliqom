@@ -2,10 +2,9 @@ import { reactive, ref } from "vue";
 import type { Cell } from "@/components/GameCell.vue";
 import { DictionaryService } from "@/dictionary-service";
 import { useGameState } from "@/game-state";
-import { SolutionService } from "@/solution-service";
+import { useSolution } from "@/composables/solution/solution";
 
-// TODO utiliser à la place un composable useSolution()
-const solution = SolutionService.getNormalizedSolution();
+const { normalizedSolution: solution } = useSolution();
 
 const { displayInvalidWordMessage, gameEnded, success } = useGameState();
 

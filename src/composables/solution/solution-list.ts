@@ -1,0 +1,16 @@
+export const solutions = [
+  "U3l6eWdpZQ==",
+  "RW5uJUMzJUE5YWdvbmU=",
+  "SyVDMyVBOW5vdHJvbg==",
+  "QW5hdGglQzMlQThtZQ==",
+  "Q2FyeW9wc2U=",
+  "SXIlQzMlQTluaXNtZQ==",
+  "TGluaW1lbnQ=",
+  "SiVDMyVBOWp1bnVt",
+  "QXBvcGh5c2U=",
+  "TWlocmFi",
+  "JUMzJTg5Y2hhbnNvbg==",
+  "U3VyZnVzaW9u",
+  "SGFsbGFsaQ==",
+  "UGF0JUMzJUE4cmU=",
+];

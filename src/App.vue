@@ -3,7 +3,6 @@ import GameGrid from "@/components/GameGrid.vue";
 import VirtualKeyboard from "@/components/keyboard/VirtualKeyboard.vue";
 import { useGameState } from "@/game-state";
 import { useGrid } from "@/grid";
-import { SolutionService } from "@/solution-service";
 import {
   computed,
   onBeforeMount,
@@ -12,11 +11,14 @@ import {
   ref,
   watch,
 } from "vue";
+import { useSolution } from "@/composables/solution/solution";
 import { DictionaryService } from "./dictionary-service";
 
-// TODO remplacer les appels à SolutionService par un composable useSolution pour récupérer 'rawSolution' et 'solution'
-const rawSolution = SolutionService.getRawSolution();
-const solution = SolutionService.getNormalizedSolution();
+const {
+  puzzleNumber,
+  rawSolution,
+  normalizedSolution: solution,
+} = useSolution();
 const { grid, currentLine, handleLetter, handleEnter, handleBackspace } =
   useGrid();
 
@@ -41,7 +43,7 @@ const copied = ref(false);
 function share(): void {
   let text =
     "COMPLIQOM #" +
-    SolutionService.getPuzzleNumber() +
+    puzzleNumber +
     " " +
     (success.value ? currentLine.value : "X") +
     "/" +
