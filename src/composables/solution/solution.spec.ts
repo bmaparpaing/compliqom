@@ -50,7 +50,7 @@ describe("useSolution", () => {
     vi.setSystemTime(refDatePlus(3));
     expect(useSolution()).toEqual({
       puzzleNumber: 4,
-      rawSolution: "Garçonnière",
+      rawSolution: "garçonnière",
       normalizedSolution: "GARCONNIERE",
     });
   });

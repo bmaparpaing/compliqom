@@ -16,8 +16,8 @@ const { grid, currentLine, handleLetter, handleEnter, handleBackspace } =
 
 const { displayInvalidWordMessage, gameEnded, success } = useGameState();
 
-const wikipediaDefinitionLink = computed(() => {
-  return `https://fr.wikipedia.org/wiki/${rawSolution}`;
+const wiktionaryDefinitionLink = computed(() => {
+  return `https://fr.wiktionary.org/wiki/${rawSolution}`;
 });
 
 function update(event: KeyboardEvent) {
@@ -98,8 +98,8 @@ onUnmounted(() => document.removeEventListener("keydown", update));
       </div>
 
       <div class="definition">
-        <a target="_blank" :href="wikipediaDefinitionLink"
-          >Définition Wikipédia (lien externe)</a
+        <a target="_blank" :href="wiktionaryDefinitionLink"
+          >Définition Wiktionnaire (lien externe)</a
         >
       </div>
     </div>
