@@ -68,8 +68,8 @@ describe("useSolution", () => {
     vi.setSystemTime(refDatePlus(5));
     expect(useSolution()).toEqual({
       puzzleNumber: 6,
-      rawSolution: "Écœurer",
-      normalizedSolution: "ECOEURER",
+      rawSolution: "Ægagropile",
+      normalizedSolution: "AEGAGROPILE",
     });
   });
 
@@ -77,15 +77,24 @@ describe("useSolution", () => {
     vi.setSystemTime(refDatePlus(6));
     expect(useSolution()).toEqual({
       puzzleNumber: 7,
+      rawSolution: "Écœurer",
+      normalizedSolution: "ECOEURER",
+    });
+  });
+
+  it("returns correct solution data for reference date + 7 days", () => {
+    vi.setSystemTime(refDatePlus(7));
+    expect(useSolution()).toEqual({
+      puzzleNumber: 8,
       rawSolution: "Œcuménisme",
       normalizedSolution: "OECUMENISME",
     });
   });
 
   it("cycles back to solution 1 when overflowing solution list by 1", () => {
-    vi.setSystemTime(refDatePlus(7));
+    vi.setSystemTime(refDatePlus(8));
     expect(useSolution()).toEqual({
-      puzzleNumber: 8,
+      puzzleNumber: 9,
       rawSolution: "Gagner",
       normalizedSolution: "GAGNER",
     });

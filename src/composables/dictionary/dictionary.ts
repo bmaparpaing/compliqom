@@ -1,11 +1,11 @@
 import dictionaryUrl from "@/assets/allowed_words.txt";
 
 export function useDictionary() {
-  const checkWordExists = async (word: string) => {
+  const isWordValid = async (word: string) => {
     const allowedWords = await dictionaryPromise;
     return !!word && allowedWords.includes(word.toUpperCase());
   };
-  return { checkWordExists };
+  return { isWordValid };
 }
 
 const dictionaryPromise = fetchDictionary();

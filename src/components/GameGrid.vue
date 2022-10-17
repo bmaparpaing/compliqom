@@ -23,7 +23,6 @@ const styleObject = reactive({
 
 <style scoped>
 .game-grid {
-  width: 16rem;
   display: grid;
   margin-bottom: 40px;
 }

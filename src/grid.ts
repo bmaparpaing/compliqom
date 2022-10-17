@@ -25,7 +25,7 @@ const currentColumn = ref(1);
 displayWordFirstLetterOnCurrentLine();
 
 export function useGrid() {
-  const { checkWordExists } = useDictionary();
+  const { isWordValid } = useDictionary();
 
   function handleLetter(letter: string): void {
     if (currentColumn.value === solution.length) return;
@@ -49,11 +49,9 @@ export function useGrid() {
 
     const word = grid[currentLine.value].map((cell) => cell.letter).join("");
 
-    const isWordValid = await checkWordExists(word);
-
     //  si le mot est valide, affiche les indices visuels au joueur puis vérifie si le joueur a gagné,
     //  sinon annule le coup (efface le mot) et affiche un message d'erreur
-    if (isWordValid) {
+    if (await isWordValid(word)) {
       displayInvalidWordMessage.value = false;
       displayHints();
       moveCursorToNextLine();

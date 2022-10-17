@@ -40,6 +40,7 @@ function getNormalizedSolution(rawSolution: string): string {
     .normalize("NFD")
     .replace(/\p{Diacritic}/gu, "")
     .replace(/æ/g, "ae")
+    .replace(/Æ/g, "AE")
     .replace(/œ/g, "oe")
     .replace(/Œ/g, "OE")
     .toUpperCase();
