@@ -38,7 +38,10 @@ export function useGrid() {
     if (currentColumn.value < 1) {
       currentColumn.value = 1;
     }
-    grid[currentLine.value][currentColumn.value].letter = ".";
+
+    const knownLetters = getKnownLetters();
+    grid[currentLine.value][currentColumn.value].letter =
+      knownLetters[currentColumn.value] ?? ".";
   }
 
   async function handleEnter() {
@@ -103,8 +106,18 @@ function moveCursorToNextLine(): void {
   currentColumn.value = 1;
 }
 
+function getKnownLetters() {
+  return solution
+    .split("")
+    .map((letter, i) => (grid.find((line) => line[i].correct) ? letter : null));
+}
+
 function displayEmptyLine(): void {
-  grid[currentLine.value].forEach((cell) => (cell.letter = "."));
+  const knownLetters = getKnownLetters();
+
+  grid[currentLine.value].forEach((cell, i) => {
+    cell.letter = knownLetters[i] ?? ".";
+  });
   displayWordFirstLetterOnCurrentLine();
 }
 
