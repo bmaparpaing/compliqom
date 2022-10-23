@@ -20,4 +20,11 @@ export const solutions = [
   "c29sJUMzJUE5Y2lzbWU=",
   "bHlzb3p5bWU=",
   "bSVDMyVBOWdhcHQlQzMlQThyZQ==",
+  'c2xpdm92aXR6',
+  'aGVsbWludGhl',
+  'dHJvY2FydA==',
+  'bmFua2lu',
+  'eWF0YWdhbg==',
+  'Y3Vpc3RyZQ==',
+  'dmVzcCVDMyVBOXJhbA==',
 ];
