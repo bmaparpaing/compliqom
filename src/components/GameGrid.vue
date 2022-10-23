@@ -9,7 +9,7 @@ const props = defineProps<{
 const styleObject = reactive({
   gridTemplateColumns:
     "repeat(" + props.gamegrid[0].length + ", minmax(0, 1fr))",
-  width: props.gamegrid[0].length * 4 + "rem",
+  width: "calc(var(--cell-size) * " + props.gamegrid[0].length + ")",
 });
 </script>
 

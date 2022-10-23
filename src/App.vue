@@ -110,8 +110,11 @@ onUnmounted(() => document.removeEventListener("keydown", update));
 main {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
+}
+
+main > div {
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .invalid-word {

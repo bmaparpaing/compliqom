@@ -19,10 +19,10 @@ defineProps<{
 
 <style scoped>
 .cell {
-  border: 2px solid white;
-  width: 4rem;
-  height: 4rem;
-  font-size: 3rem;
+  border: var(--cell-border-size) solid white;
+  width: var(--cell-size);
+  height: var(--cell-size);
+  font-size: calc(var(--cell-size) - 1rem);
   font-weight: bold;
   display: flex;
   align-items: center;
