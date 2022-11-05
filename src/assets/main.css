@@ -1,22 +1,25 @@
 :root {
     --color-correct-letter: firebrick;
     --color-misplaced-letter: #efb409;
+    --color-main: white;
 }
 
 body {
     background-color: #0584c9;
-    color: white;
+    color: var(--color-main);
     font-family: Helvetica, sans-serif;
 }
 
 a {
-    color: white;
+    color: var(--color-main);
 }
 
 html {
     font-size: 16px;
     --cell-size: 3rem;
     --cell-border-size: 1px;
+    --cell-content-size: calc(var(--cell-size) - 1rem);
+    --cell-cursor-size: 2px;
 }
 @media (min-width:768px) {
     html {
@@ -27,6 +30,7 @@ html {
     html {
         font-size: 19px;
         --cell-border-size: 2px;
+        --cell-cursor-size: 3px;
     }
 }
 @media (min-width:1280px) {

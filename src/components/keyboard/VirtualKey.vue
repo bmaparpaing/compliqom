@@ -27,7 +27,7 @@ const { gameEnded } = useGameState();
 
 <style scoped>
 .virtual-key {
-  border: 1px solid white;
+  border: 1px solid var(--color-main);
   border-radius: 4px;
   padding: 12px;
   display: flex;

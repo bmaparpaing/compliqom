@@ -77,6 +77,7 @@ export function useGrid() {
   return {
     grid,
     currentLine,
+    currentColumn,
     handleLetter,
     handleEnter,
     handleBackspace,
