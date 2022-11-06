@@ -99,8 +99,13 @@ onUnmounted(() => document.removeEventListener("keydown", update));
 
       <div class="definition">
         <a target="_blank" :href="wiktionaryDefinitionLink"
-          >Définition Wiktionnaire (lien externe)</a
-        >
+          >Définition Wiktionnaire<svg role="img" viewBox="0 0 448 480">
+            <title>lien externe</title>
+            <use
+              href="./assets/up-right-from-square-solid.svg#external-link-icon"
+            ></use>
+          </svg>
+        </a>
       </div>
     </div>
   </main>
@@ -142,6 +147,12 @@ main > div {
   margin-top: 20px;
   font-size: 1.4rem;
   text-align: center;
+}
+
+.definition svg {
+  margin-left: 0.4em;
+  width: 0.75em;
+  fill: currentColor;
 }
 
 .v-leave-active {

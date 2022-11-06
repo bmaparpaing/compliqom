@@ -11,3 +11,6 @@ Code sous [licence MIT](./LICENSE.md).
 
 Favicon provenant de [Twemoji](https://github.com/twitter/twemoji) par Twitter sous
 licence [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).
+
+Icônes provenant de [Font Awesome](https://github.com/FortAwesome/Font-Awesome) sous
+licence [CC-BY 4.0](https://creativecommons.org/licenses/by/4.0/).
