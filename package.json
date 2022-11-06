@@ -1,6 +1,6 @@
 {
   "name": "compliqom",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check build-only",
