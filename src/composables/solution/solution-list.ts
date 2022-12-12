@@ -69,4 +69,11 @@ export const solutions = [
   "dnVsZ2F0ZQ==",
   "bWVuZWF1",
   "aGF1YmFu",
+  "c3BvcnR1bGU=",
+  "cm90cmluZw==",
+  "YXNoayVDMyVBOW5hemU=",
+  "Zmx5c2No",
+  "aGFkamRq",
+  "bGFwaWF6",
+  "YWN0dWFpcmU=",
 ];
