@@ -156,7 +156,7 @@ export const solutions = [
   "ZmFjdWxl",
   "c3luY3l0aXVt",
   "Y2FtYml1bQ==",
-  "eiVDMyVBOWxvdGU=",
+  "Y3ltYWlzZQ==",
   "c2xpa2tl",
   "ZGlhcGhhbmU=",
   "c3ltcGh5c2U=",
